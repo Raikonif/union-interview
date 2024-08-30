@@ -1,23 +1,40 @@
 import GeneralLayout from "../layouts/GeneralLayout";
 import AccountsTable from "../pages/accounts/AccountsTable";
-import ClientDashboard from "../pages/clients/ClientDashboard";
-import ClientRegisterForm from "../pages/clients/ClientRegisterForm";
+import ClientsTable from "../pages/clients/ClientsTable";
+import Login from "../pages/login/Login";
+import AdminDashboard from "../pages/AdminDashboard.tsx";
+import ProtectedRoutes from "./ProtectedRoutes";
+import AdminProvider from "../pages/context/AdminProvider";
 
 const ManagementRoutes = {
   path: "/",
-  element: <GeneralLayout />,
+  element: (
+    <AdminProvider>
+      <GeneralLayout />
+    </AdminProvider>
+  ),
   children: [
     {
       path: "",
-      element: <ClientRegisterForm />,
+      element: <Login />,
     },
     {
-      path: "client-dashboard",
-      element: <ClientDashboard />,
-    },
-    {
-      path: "accounts-table",
-      element: <AccountsTable />,
+      path: "",
+      element: (
+        <ProtectedRoutes>
+          <AdminDashboard />
+        </ProtectedRoutes>
+      ),
+      children: [
+        {
+          path: "accounts-table",
+          element: <AccountsTable />,
+        },
+        {
+          path: "clients-table",
+          element: <ClientsTable />,
+        },
+      ],
     },
   ],
 };

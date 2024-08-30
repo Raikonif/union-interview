@@ -1,13 +1,17 @@
-import { useState } from "react";
 import "./App.css";
 import RoutesApp from "./routes/RoutesApp";
-import { BrowserRouter } from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
+import {NextUIProvider} from "@nextui-org/react";
 
 function App() {
   return (
-    <BrowserRouter>
-      <RoutesApp />
-    </BrowserRouter>
+    <NextUIProvider>
+      <BrowserRouter>
+        <main>
+          <RoutesApp/>
+        </main>
+      </BrowserRouter>
+    </NextUIProvider>
   );
 }
 
