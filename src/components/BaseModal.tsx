@@ -7,12 +7,13 @@ interface Props {
   isOpen: boolean;
   onOpenChange: () => void;
   onClose: () => void;
+  customSize?: "sm" | "md" | "lg" | "xl" | "2xl" | "full";
   title: string
 }
 
-function BaseModal({children, isOpen, onOpenChange, onClose, title}: Props) {
+function BaseModal({children, isOpen, onOpenChange, onClose, title, customSize = "lg"}: Props) {
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onClose}>
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onClose} size={customSize}>
       <ModalContent>
         {(onClose) => (
           <>

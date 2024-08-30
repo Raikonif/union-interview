@@ -3,6 +3,7 @@ import {Outlet} from "react-router-dom";
 import ModalCRUDClient from "./clients/components/ModalCRUDClient.tsx";
 import ModalCRUDAccount from "./accounts/components/ModalCRUDAccount.tsx";
 import ModalDelete from "../components/ModalDelete.tsx";
+import ModalListClientAccount from "./clients/components/ModalListClientAccount.tsx";
 
 function AdminDashboard() {
   return (
@@ -12,6 +13,7 @@ function AdminDashboard() {
         <Outlet/>
       </div>
       <ModalCRUDClient/>
+      <ModalListClientAccount/>
       <ModalCRUDAccount/>
       <ModalDelete/>
     </div>

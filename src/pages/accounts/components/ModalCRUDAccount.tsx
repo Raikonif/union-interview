@@ -6,7 +6,7 @@ function ModalCRUDAccount() {
   const {onOpenAccount, isOpenAccount, onCloseAccount} = useContext(AdminContext);
   return (
       <BaseModal
-          title="Crear Cuenta Bancaria"
+          title="Cuenta Bancaria"
           isOpen={isOpenAccount}
           onClose={onCloseAccount}
           action={async () => {

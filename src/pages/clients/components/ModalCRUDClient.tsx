@@ -7,7 +7,7 @@ function ModalCRUDClient() {
   const {isOpenClient, onCloseClient, onOpenClient} = useContext(AdminContext);
   return (
       <BaseModal
-          title="Crear Usario"
+          title="Cliente"
           isOpen={isOpenClient}
           onClose={onCloseClient}
           action={async () => {

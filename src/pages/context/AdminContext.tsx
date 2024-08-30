@@ -12,6 +12,9 @@ interface AdminContextData {
   isOpenDelete: boolean;
   onOpenDelete: () => void;
   onCloseDelete: () => void;
+  isOpenClientAccounts: boolean;
+  onOpenClientAccounts: () => void;
+  onCloseClientAccounts: () => void;
 }
 
 const AdminContext = createContext<AdminContextData>({} as AdminContextData);

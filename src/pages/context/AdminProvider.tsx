@@ -11,6 +11,7 @@ function AdminProvider({children}: Props) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   //modal client
   const {isOpen: isOpenClient, onOpen: onOpenClient, onClose: onCloseClient} = useDisclosure();
+  const {isOpen: isOpenClientAccounts, onOpen: onOpenClientAccounts, onClose: onCloseClientAccounts} = useDisclosure();
   // modal account
   const {isOpen: isOpenAccount, onOpen: onOpenAccount, onClose: onCloseAccount} = useDisclosure();
 
@@ -33,6 +34,9 @@ function AdminProvider({children}: Props) {
             isOpenDelete,
             onOpenDelete,
             onCloseDelete,
+            isOpenClientAccounts,
+            onCloseClientAccounts,
+            onOpenClientAccounts,
           }}
       >
         {children}
