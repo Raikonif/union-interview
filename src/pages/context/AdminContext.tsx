@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import {createContext} from "react";
 
 interface AdminContextData {
   isAuthenticated: boolean;
@@ -6,6 +6,12 @@ interface AdminContextData {
   isOpenClient: boolean;
   onOpenClient: () => void;
   onCloseClient: () => void;
+  isOpenAccount: boolean;
+  onOpenAccount: () => void;
+  onCloseAccount: () => void;
+  isOpenDelete: boolean;
+  onOpenDelete: () => void;
+  onCloseDelete: () => void;
 }
 
 const AdminContext = createContext<AdminContextData>({} as AdminContextData);

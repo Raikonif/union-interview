@@ -1,6 +1,8 @@
 import Menu from "../components/Menu.tsx";
 import {Outlet} from "react-router-dom";
-import ModalCRUDAccount from "./clients/components/ModalCRUDAccount.tsx";
+import ModalCRUDClient from "./clients/components/ModalCRUDClient.tsx";
+import ModalCRUDAccount from "./accounts/components/ModalCRUDAccount.tsx";
+import ModalDelete from "../components/ModalDelete.tsx";
 
 function AdminDashboard() {
   return (
@@ -9,7 +11,9 @@ function AdminDashboard() {
       <div className="flex w-full h-full ">
         <Outlet/>
       </div>
+      <ModalCRUDClient/>
       <ModalCRUDAccount/>
+      <ModalDelete/>
     </div>
   );
 }

@@ -3,14 +3,14 @@ import {useContext} from "react";
 import AdminContext from "../../context/AdminContext.tsx";
 
 function ModalCRUDAccount() {
-  const {isOpenClient, onCloseClient, onOpenClient} = useContext(AdminContext);
+  const {onOpenAccount, isOpenAccount, onCloseAccount} = useContext(AdminContext);
   return (
       <BaseModal
           title="Crear Cuenta Bancaria"
-          isOpen={isOpenClient}
-          onClose={onCloseClient}
+          isOpen={isOpenAccount}
+          onClose={onCloseAccount}
           action={async () => {
-          }} onOpenChange={onOpenClient}>
+          }} onOpenChange={onOpenAccount}>
 
         <form className="w-full mx-auto bg-white">
           <div className="mb-4">

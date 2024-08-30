@@ -11,7 +11,7 @@ import {useContext} from "react";
 import AdminContext from "../context/AdminContext.tsx";
 
 function ClientsTable() {
-  const {isOpenClient, onOpenClient, onCloseClient} = useContext(AdminContext);
+  const {onOpenClient, onOpenDelete} = useContext(AdminContext);
   return (
     <div className="flex w-full mt-10">
       <Table aria-label="Example static collection table" className="flex w-full h-full pt-4 mx-4"
@@ -29,9 +29,9 @@ function ClientsTable() {
             <TableCell>CEO</TableCell>
             <TableCell>
               <div className="flex gap-5 items-center">
-                <button className="p-2 rounded-lg bg-gray-200 text-purple-600 hover:bg-gray-400"><FaUserEdit size={16}/>
+                <button className="p-2 rounded-lg bg-gray-200 text-purple-600 hover:bg-gray-400" onClick={onOpenClient}><FaUserEdit size={16}/>
                 </button>
-                <button className="p-2 rounded-lg bg-gray-200 text-red-600 hover:bg-gray-400"><FaTrash size={16}/>
+                <button className="p-2 rounded-lg bg-gray-200 text-red-600 hover:bg-gray-400" onClick={onOpenDelete}><FaTrash size={16}/>
                 </button>
               </div>
             </TableCell>
