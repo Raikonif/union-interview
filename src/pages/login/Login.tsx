@@ -2,6 +2,7 @@ import { useState, FormEvent, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AdminContext from "../context/AdminContext";
+import {CLIENTS} from "../../constants/project.constants.ts";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -17,12 +18,13 @@ function Login() {
     if (!email || !password) {
       setError("Please fill in all fields.");
       toast.error("Please fill in all fields.");
+      console.log("error", error)
       return;
     }
     if (email !== "" && password !== "") {
       toast.success("Login success");
       setIsAuthenticated(true);
-      navigate("clients-table");
+      navigate(CLIENTS);
     }
     // Here you would typically handle the login logic
     console.log("Login attempted with:", { email, password });

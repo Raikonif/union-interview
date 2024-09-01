@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 function GeneralLayout() {
   return (
-    <div className="flex">
+    <div className="flex min-h-screen">
       <Outlet />
     </div>
   );

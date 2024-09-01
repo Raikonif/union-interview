@@ -7,9 +7,9 @@ import ModalListClientAccount from "./clients/components/ModalListClientAccount.
 
 function AdminDashboard() {
   return (
-    <div className="flex w-full lg:flex-row flex-col">
+    <div className="flex w-full lg:flex-row h-full flex-col">
       <Menu/>
-      <div className="flex w-full h-full ">
+      <div className="flex w-full h-full">
         <Outlet/>
       </div>
       <ModalCRUDClient/>

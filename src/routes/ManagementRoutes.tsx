@@ -27,11 +27,11 @@ const ManagementRoutes = {
       ),
       children: [
         {
-          path: "accounts-table",
+          path: "accounts",
           element: <AccountsTable />,
         },
         {
-          path: "clients-table",
+          path: "clients",
           element: <ClientsTable />,
         },
       ],
