@@ -15,7 +15,7 @@ function Menu() {
   };
 
   return (
-      <div className="flex min-h-screen bg-gray-400 flex-col">
+      <div className="flex min-h-screen bg-sky-400 flex-col">
         <nav className="flex-1 overflow-y-auto py-4 px-2">
           <div className="flex w-full items-center justify-center">
                 <FaPiggyBank size={40} className="m-5" color="white"/>

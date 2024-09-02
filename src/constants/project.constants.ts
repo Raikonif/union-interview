@@ -1,6 +1,8 @@
 import {FaIcons} from "react-icons/fa";
 import {IconType} from "react-icons";
 
+export const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 export const CLIENTS = "clients"
 
 export const ACCOUNTS = "accounts"
