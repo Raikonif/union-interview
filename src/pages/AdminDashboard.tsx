@@ -8,6 +8,7 @@ import ProgressCircle from "../components/ProgressCircle.tsx";
 import {useContext} from "react";
 import AdminContext from "./context/AdminContext.tsx";
 import {Toaster} from "react-hot-toast";
+import Footer from "../components/Footer.tsx";
 
 function AdminDashboard() {
 
@@ -16,7 +17,10 @@ function AdminDashboard() {
     <div className="flex w-full lg:flex-row h-full flex-col">
       <Menu/>
       <div className="flex w-full h-full">
+        <div className="flex flex-col w-full h-full">
         <Outlet/>
+          <Footer/>
+        </div>
       </div>
       <ModalCRUDClient/>
       <ModalListClientAccount/>
