@@ -13,12 +13,10 @@ import AdminContext from "../context/AdminContext.tsx";
 import {MdAccountBalanceWallet} from "react-icons/md";
 import {OpClient} from "../../interfaces/Client.ts";
 import {getAllClients} from "../../services/client.service.ts";
-import {toast} from "react-toastify";
-import loading = toast.loading;
 
 function ClientsTable() {
-  const [clientsList, setClientsList] = useState<OpClient>([] as OpClient);
-  const {onOpenClient, onOpenDelete, onOpenAccount, onOpenClientAccounts, setLoading} = useContext(AdminContext);
+  const [clientsList, setClientsList] = useState<OpClient[]>([] as OpClient[]);
+  const {onOpenClient, onOpenDelete, onOpenAccount, onOpenClientAccounts, setLoading, loading} = useContext(AdminContext);
 
 
   const getClientsData = useCallback(async () => {
@@ -36,15 +34,15 @@ function ClientsTable() {
         setClientsList(clients);
       } else {
         console.log("No se encontraron clientes en la respuesta", response);
-        setClientsList([] as OpClient);
+        setClientsList([] as OpClient[]);
       }
     } catch (error) {
       console.error("Error al obtener clientes:", error);
-      setClientsList([] as OpClient);
+      setClientsList([] as OpClient[]);
     } finally {
       setLoading(false);
     }
-  }, [loading]);
+  }, []);
 
   useEffect(() => {
     getClientsData();

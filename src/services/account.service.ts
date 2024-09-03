@@ -2,11 +2,11 @@ import {VITE_BACKEND_URL} from "../constants/project.constants.ts";
 import axios from "axios";
 
 const getAllAccounts = async () => {
-  return await axios.get("/api" + "/accounts");
+  return await axios.get(VITE_BACKEND_URL + "/api/v1" + "/accounts");
 }
 
 const getAccountById = async (id: string) => {
-  return await axios.get(VITE_BACKEND_URL + "/accounts/" + id);
+  return await axios.get(VITE_BACKEND_URL + "/api/v1" + "/accounts/" + id);
 }
 
 const createAccount = async (account: any) => {
