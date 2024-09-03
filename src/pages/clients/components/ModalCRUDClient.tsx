@@ -4,6 +4,8 @@ import AdminContext from "../../context/AdminContext.tsx";
 import {FaChevronDown} from "react-icons/fa";
 import {OpClient} from "../../../interfaces/Client.ts";
 import {CE, CI, FEMALE, MALE, OTHER, PASSPORT} from "../../../constants/project.constants.ts";
+import {createClient} from "../../../services/client.service.ts";
+import {toast} from "react-toastify";
 
 function ModalCRUDClient() {
   const {isOpenClient, onCloseClient, onOpenClient} = useContext(AdminContext);
@@ -18,6 +20,18 @@ function ModalCRUDClient() {
     }
   )
 
+  const createConfirmClient = async () => {
+    const {data, status} = await createClient(clientData);
+    if (status === 201) {
+      console.log("Cliente creado", data);
+      toast.success("Cliente creado con éxito");
+    } else {
+      console.log("Error al crear cliente", data);
+      toast.error("Error al crear cliente");
+    }
+    onCloseClient();
+  }
+
   useEffect(() => {
     console.log("clientData", clientData)
   }, [clientData]);
@@ -27,8 +41,8 @@ function ModalCRUDClient() {
       title="Cliente"
       isOpen={isOpenClient}
       onClose={onCloseClient}
-      action={async () => {
-      }} onOpenChange={onOpenClient}>
+      action={async () => await createConfirmClient()}
+      onOpenChange={onOpenClient}>
 
       <div className="mx-auto">
         <form className="bg-white mb-4">

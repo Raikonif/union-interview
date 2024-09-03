@@ -11,7 +11,7 @@ interface Props {
   title: string
 }
 
-function BaseModal({children, isOpen, onOpenChange, onClose, title, customSize = "lg"}: Props) {
+function BaseModal({children, isOpen, onOpenChange, onClose, title, customSize = "lg", action}: Props) {
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onClose} size={customSize}>
       <ModalContent>
@@ -25,7 +25,10 @@ function BaseModal({children, isOpen, onOpenChange, onClose, title, customSize =
               <Button color="danger" variant="light" onPress={onClose}>
                 Cancelar
               </Button>
-              <Button color="primary" onPress={onClose}>
+              <Button color="primary" onPress={async ()=> {
+                await action();
+                onClose()
+              }}>
                 Confirmar
               </Button>
             </ModalFooter>

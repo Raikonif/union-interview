@@ -1,6 +1,8 @@
 import {createContext} from "react";
 
 interface AdminContextData {
+  loading: boolean;
+  setLoading: (isLoading: boolean) => void;
   isAuthenticated: boolean;
   setIsAuthenticated: (value: boolean) => void;
   isOpenClient: boolean;

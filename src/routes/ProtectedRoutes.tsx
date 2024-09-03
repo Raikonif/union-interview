@@ -9,15 +9,15 @@ function ProtectedRoutes({ children }: Props) {
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated } = useContext(AdminContext);
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/", {
-        state: { from: location.pathname },
-      });
-    } else {
-      navigate(location.pathname);
-    }
-  }, [isAuthenticated, navigate]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     navigate("/", {
+  //       state: { from: location.pathname },
+  //     });
+  //   } else {
+  //     navigate(location.pathname);
+  //   }
+  // }, [isAuthenticated, navigate]);
   return <>{children}</>;
 }
 

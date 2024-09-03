@@ -9,6 +9,8 @@ interface Props {
 function AdminProvider({children}: Props) {
   // authentification
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   //modal client
   const {isOpen: isOpenClient, onOpen: onOpenClient, onClose: onCloseClient} = useDisclosure();
   const {isOpen: isOpenClientAccounts, onOpen: onOpenClientAccounts, onClose: onCloseClientAccounts} = useDisclosure();
@@ -17,12 +19,12 @@ function AdminProvider({children}: Props) {
 
   // modal delete register
   const {isOpen: isOpenDelete, onOpen: onOpenDelete, onClose: onCloseDelete} = useDisclosure();
-  //   get Data
-  // const getAllAccounts = () => {};
-  // const getAllClients = () => {};
+
   return (
       <AdminContext.Provider
           value={{
+            loading,
+            setLoading,
             isAuthenticated,
             setIsAuthenticated,
             isOpenClient,
