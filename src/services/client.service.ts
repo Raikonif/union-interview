@@ -13,8 +13,13 @@ const createClient = async (client: any) => {
   return await axios.post(VITE_BACKEND_URL + "/api/v1" + "/clients", client);
 }
 
+const deleteClient = async (id: number) => {
+  return await axios.delete(VITE_BACKEND_URL + "/api/v1" + "/clients/" + id);
+}
+
 export {
   getAllClients,
   getClientById,
-  createClient
+  createClient,
+  deleteClient
 }

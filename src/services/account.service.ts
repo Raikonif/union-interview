@@ -1,5 +1,6 @@
 import {VITE_BACKEND_URL} from "../constants/project.constants.ts";
 import axios from "axios";
+import {OpAccount} from "../interfaces/Account.ts";
 
 const getAllAccounts = async () => {
   return await axios.get(VITE_BACKEND_URL + "/api/v1" + "/accounts");
@@ -9,16 +10,16 @@ const getAccountById = async (id: string) => {
   return await axios.get(VITE_BACKEND_URL + "/api/v1" + "/accounts/" + id);
 }
 
-const createAccount = async (account: any) => {
-  return await axios.post(VITE_BACKEND_URL + "/accounts", account);
+const createAccount = async (account: OpAccount) => {
+  return await axios.post(VITE_BACKEND_URL + "/api/v1" + "/accounts", account);
 }
 
 const updateAccount = async (id: string, account: any) => {
-  return await axios.put(VITE_BACKEND_URL + "/accounts/" + id, account);
+  return await axios.put(VITE_BACKEND_URL + "/api/v1" + "/accounts/" + id, account);
 }
 
-const deleteAccount = async (id: string) => {
-  return await axios.delete(VITE_BACKEND_URL + "/accounts/" + id);
+const deleteAccount = async (id: number) => {
+  return await axios.delete(VITE_BACKEND_URL + "/api/v1" + "/accounts/" + id);
 }
 
 export {

@@ -1,5 +1,6 @@
 export interface Account {
-  id: string;
+  id: number;
+  client_id: number;
   account_type: string;
   account_number: number;
   currency: string;

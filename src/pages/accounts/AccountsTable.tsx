@@ -1,38 +1,12 @@
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button} from "@nextui-org/react";
 import {FaPlus, FaTrash, FaUserEdit} from "react-icons/fa";
 import AdminContext from "../context/AdminContext.tsx";
-import {useCallback, useContext, useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
 import {OpAccount} from "../../interfaces/Account.ts";
-import {getAllAccounts} from "../../services/account.service.ts";
+import {ACCOUNTS} from "../../constants/project.constants.ts";
 
 function AccountsTable() {
-  const [accountsList, setAccountsList] = useState<OpAccount[]>([] as OpAccount[]);
-  const {onOpenAccount, onOpenDelete, setLoading, loading} = useContext(AdminContext);
-
-  const getAccountsData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const response = await getAllAccounts();
-      console.log("response", response);
-
-      if (response.status !== 200) {
-        console.log("Error al obtener clientes", response);
-      }
-
-      const accounts = response.data;
-      if (accounts) {
-        setAccountsList(accounts);
-      } else {
-        console.log("No se encontraron clientes en la respuesta", response);
-        setAccountsList([] as OpAccount[]);
-      }
-    } catch (error) {
-      console.error("Error al obtener clientes:", error);
-      setAccountsList([] as OpAccount[]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const {onOpenAccount, onOpenDelete, setDeleteOP, getAccountsData, accountsList} = useContext(AdminContext);
 
   useEffect(() => {
     getAccountsData();
@@ -60,7 +34,10 @@ function AccountsTable() {
                   <Button variant="bordered" onClick={onOpenAccount} size="sm" color="warning">
                     <FaUserEdit size={16} />
                   </Button>
-                  <Button variant="bordered" onClick={onOpenDelete} size="sm" color="danger">
+                  <Button variant="bordered" onClick={()=> {
+                    setDeleteOP({idRow: account.id || 0, type: ACCOUNTS});
+                    onOpenDelete();
+                  }} size="sm" color="danger">
                     <FaTrash size={16} />
                   </Button>
                 </div>

@@ -8,41 +8,23 @@ import {
   Button, DropdownItem, Dropdown, DropdownTrigger, DropdownMenu,
 } from "@nextui-org/react";
 import {FaPlus, FaTrash, FaUserEdit} from "react-icons/fa";
-import {useCallback, useContext, useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
 import AdminContext from "../context/AdminContext.tsx";
 import {MdAccountBalanceWallet} from "react-icons/md";
 import {OpClient} from "../../interfaces/Client.ts";
-import {getAllClients} from "../../services/client.service.ts";
+import {CLIENTS} from "../../constants/project.constants.ts";
 
 function ClientsTable() {
-  const [clientsList, setClientsList] = useState<OpClient[]>([] as OpClient[]);
-  const {onOpenClient, onOpenDelete, onOpenAccount, onOpenClientAccounts, setLoading, loading} = useContext(AdminContext);
-
-
-  const getClientsData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const response = await getAllClients();
-      console.log("response", response);
-
-      if (response.status !== 200) {
-        console.log("Error al obtener clientes", response);
-      }
-
-      const clients = response.data;
-      if (clients) {
-        setClientsList(clients);
-      } else {
-        console.log("No se encontraron clientes en la respuesta", response);
-        setClientsList([] as OpClient[]);
-      }
-    } catch (error) {
-      console.error("Error al obtener clientes:", error);
-      setClientsList([] as OpClient[]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const {
+    onOpenClient,
+    onOpenDelete,
+    onOpenAccount,
+    onOpenClientAccounts,
+    clientsList,
+    getClientsData,
+    setDeleteOP,
+    setClientID,
+  } = useContext(AdminContext);
 
   useEffect(() => {
     getClientsData();
@@ -72,7 +54,7 @@ function ClientsTable() {
               <TableCell key={client.id}>
                 {client.name} {client.first_last_name} {client.second_last_name}
               </TableCell>
-              <TableCell>CEO</TableCell>
+              <TableCell>{client.doc_number}</TableCell>
               <TableCell>
                 <div className="flex gap-5 items-center">
                   <Button
@@ -85,7 +67,10 @@ function ClientsTable() {
                   </Button>
                   <Button
                     variant="bordered"
-                    onClick={onOpenDelete}
+                    onClick={() => {
+                      setDeleteOP({idRow: client!.id || 0, type: CLIENTS});
+                      onOpenDelete();
+                    }}
                     size={"sm"}
                     color={"danger"}
                   >
@@ -100,7 +85,10 @@ function ClientsTable() {
                       </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions">
-                      <DropdownItem key="new" onPress={onOpenAccount} className="text-success">Nueva Cuenta
+                      <DropdownItem key="new" onPress={()=> {
+                        setClientID(client.id || 0);
+                        onOpenAccount();
+                      }} className="text-success">Nueva Cuenta
                         Bancaria</DropdownItem>
                       <DropdownItem key="copy" className="text-warning" onPress={onOpenClientAccounts}>Ver y Editar
                         Cuentas Bancarias</DropdownItem>

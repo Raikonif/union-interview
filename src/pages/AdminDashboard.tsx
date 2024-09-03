@@ -7,6 +7,7 @@ import ModalListClientAccount from "./clients/components/ModalListClientAccount.
 import ProgressCircle from "../components/ProgressCircle.tsx";
 import {useContext} from "react";
 import AdminContext from "./context/AdminContext.tsx";
+import {Toaster} from "react-hot-toast";
 
 function AdminDashboard() {
 
@@ -21,6 +22,7 @@ function AdminDashboard() {
       <ModalListClientAccount/>
       <ModalCRUDAccount/>
       <ModalDelete/>
+      <Toaster />
       {loading && <ProgressCircle text={"Cargando..."} color={"primary"}/>}
     </div>
   );

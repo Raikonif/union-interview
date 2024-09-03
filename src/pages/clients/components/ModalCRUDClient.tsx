@@ -8,7 +8,6 @@ import {createClient} from "../../../services/client.service.ts";
 import {toast} from "react-toastify";
 
 function ModalCRUDClient() {
-  const {isOpenClient, onCloseClient, onOpenClient} = useContext(AdminContext);
   const [clientData, setClientData] = useState<OpClient>({
       name: "",
       first_last_name: "",
@@ -19,10 +18,12 @@ function ModalCRUDClient() {
       gender: MALE,
     }
   )
+  const {isOpenClient, onCloseClient, onOpenClient, getClientsData} = useContext(AdminContext);
 
   const createConfirmClient = async () => {
     const {data, status} = await createClient(clientData);
     if (status === 201) {
+      await getClientsData();
       console.log("Cliente creado", data);
       toast.success("Cliente creado con éxito");
     } else {

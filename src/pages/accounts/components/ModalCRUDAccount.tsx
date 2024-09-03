@@ -2,14 +2,18 @@ import BaseModal from "../../../components/BaseModal.tsx";
 import {useContext, useEffect, useState} from "react";
 import AdminContext from "../../context/AdminContext.tsx";
 import {OpAccount} from "../../../interfaces/Account.ts";
-import {toast} from "react-toastify";
+import {toast} from "react-hot-toast";
 import {createAccount} from "../../../services/account.service.ts";
+import {BOLIVIANOS, CHECKING, DOLLARS, SAVINGS} from "../../../constants/project.constants.ts";
 
 function ModalCRUDAccount() {
+  const {getAccountsData, clientID} = useContext(AdminContext);
+
   const [accountData, setAccountData] = useState<OpAccount>({
-    account_type: "",
+    client_id: clientID,
+    account_type: SAVINGS,
     account_number: 0,
-    currency: "Bolivianos",
+    currency: BOLIVIANOS,
     amount: "",
     branch: "",
     created_at: "",
@@ -18,6 +22,7 @@ function ModalCRUDAccount() {
   const createConfirmAccount = async () => {
     const {data, status} = await createAccount(accountData);
     if (status === 201) {
+      await getAccountsData();
       console.log("Cuenta creada", data);
       toast.success("Cuenta creada con éxito");
     } else {
@@ -48,8 +53,8 @@ function ModalCRUDAccount() {
             ...accountData,
             account_type: e.target.value
           })} required>
-            <option value="savings">Caja de ahorro</option>
-            <option value="checking">Cuenta corriente</option>
+            <option value={SAVINGS}>Caja de ahorro</option>
+            <option value={CHECKING}>Cuenta corriente</option>
           </select>
         </div>
 
@@ -66,8 +71,8 @@ function ModalCRUDAccount() {
           <select id="currency" name="currency" className="w-full text-sm p-2 border rounded"
                   value={accountData.currency}
                   onChange={(e) => setAccountData({...accountData, currency: e.target.value})} required>
-            <option value="Bolivianos">BS</option>
-            <option value="Dollars">US</option>
+            <option value={BOLIVIANOS}>BS</option>
+            <option value={DOLLARS}>US</option>
           </select>
         </div>
 

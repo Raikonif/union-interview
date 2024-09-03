@@ -7,6 +7,10 @@ export const CLIENTS = "clients"
 
 export const ACCOUNTS = "accounts"
 
+export const BOLIVIANOS = "Bs"
+
+export const DOLLARS = "$us"
+
 export const CI = "identity card"
 
 export const PASSPORT = "passport"
@@ -18,6 +22,11 @@ export const MALE = "male"
 export const FEMALE = "female"
 
 export const OTHER = "other"
+
+export const SAVINGS = "savings"
+
+export const CHECKING = "checking"
+
 
 export const Icons: Record<string, IconType> = {
   ...FaIcons,

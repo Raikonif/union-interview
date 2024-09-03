@@ -1,10 +1,18 @@
 import {createContext} from "react";
+import {OpAccount} from "../../interfaces/Account.ts";
+import {OpClient} from "../../interfaces/Client.ts";
 
 interface AdminContextData {
   loading: boolean;
   setLoading: (isLoading: boolean) => void;
   isAuthenticated: boolean;
   setIsAuthenticated: (value: boolean) => void;
+  clientID: number;
+  setClientID: (id: number) => void;
+  clientsList: OpClient[];
+  setClientsList: (clients: OpClient[]) => void;
+  accountsList: OpAccount[];
+  setAccountsList: (accounts: OpAccount[]) => void;
   isOpenClient: boolean;
   onOpenClient: () => void;
   onCloseClient: () => void;
@@ -17,6 +25,10 @@ interface AdminContextData {
   isOpenClientAccounts: boolean;
   onOpenClientAccounts: () => void;
   onCloseClientAccounts: () => void;
+  deleteOP: { idRow: number; type: string };
+  setDeleteOP: (data: { idRow: number; type: string }) => void;
+  getAccountsData: () => Promise<void>;
+  getClientsData: () => Promise<void>;
 }
 
 const AdminContext = createContext<AdminContextData>({} as AdminContextData);
