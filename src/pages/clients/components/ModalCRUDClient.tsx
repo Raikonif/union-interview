@@ -1,24 +1,14 @@
 import BaseModal from "../../../components/BaseModal.tsx";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
 import AdminContext from "../../context/AdminContext.tsx";
 import {FaChevronDown} from "react-icons/fa";
-import {OpClient} from "../../../interfaces/Client.ts";
-import {CE, CI, FEMALE, MALE, OTHER, PASSPORT} from "../../../constants/project.constants.ts";
-import {createClient} from "../../../services/client.service.ts";
-import {toast} from "react-toastify";
+import {CE, CI, CREATE, EDIT, FEMALE, MALE, OTHER, PASSPORT} from "../../../constants/project.constants.ts";
+import {createClient, updateClient} from "../../../services/client.service.ts";
+import {toast} from "react-hot-toast";
 
 function ModalCRUDClient() {
-  const [clientData, setClientData] = useState<OpClient>({
-      name: "",
-      first_last_name: "",
-      second_last_name: "",
-      doc_type: CI,
-      doc_number: "",
-      birth_date: "",
-      gender: MALE,
-    }
-  )
-  const {isOpenClient, onCloseClient, onOpenClient, getClientsData} = useContext(AdminContext);
+
+  const {isOpenClient, onCloseClient, onOpenClient, getClientsData, rowTypeOP, clientData, setClientData} = useContext(AdminContext);
 
   const createConfirmClient = async () => {
     const {data, status} = await createClient(clientData);
@@ -33,16 +23,50 @@ function ModalCRUDClient() {
     onCloseClient();
   }
 
+  const editConfirmClient = async ()=> {
+    const {data, status} = await updateClient(clientData);
+    if (status === 200) {
+      await getClientsData();
+      console.log("Cliente modificado", data);
+      toast.success("Cliente modificado con éxito");
+    } else {
+      console.log("Error al modificar el cliente", data);
+      toast.error("Error al modificar cliente");
+    }
+  }
+
+  const handleEditCreateOption = async () => {
+    if(rowTypeOP.createEdit === EDIT) {
+      await editConfirmClient();
+    }
+    if(rowTypeOP.createEdit === CREATE) {
+      await createConfirmClient();
+    }
+  }
+
+  const convertDateToISO = (dateString: string) => {
+    const [day, month, year] = dateString.split('/');
+    return `${year}-${month}-${day}`;
+  };
+
+  const isISODate = (dateString: string) => {
+    const isoFormat = /^\d{4}-\d{2}-\d{2}$/;
+    return isoFormat.test(dateString);
+  };
+
   useEffect(() => {
-    console.log("clientData", clientData)
-  }, [clientData]);
+    if (clientData.birth_date && rowTypeOP.createEdit === EDIT && !isISODate(clientData.birth_date)) {
+      const formattedDate = convertDateToISO(clientData.birth_date);
+      setClientData({...clientData, birth_date: formattedDate});
+    }
+  }, [rowTypeOP]);
 
   return (
     <BaseModal
       title="Cliente"
       isOpen={isOpenClient}
       onClose={onCloseClient}
-      action={async () => await createConfirmClient()}
+      action={async () => await handleEditCreateOption()}
       onOpenChange={onOpenClient}>
 
       <div className="mx-auto">

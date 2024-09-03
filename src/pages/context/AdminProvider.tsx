@@ -1,24 +1,39 @@
-import {ReactNode, useCallback, useState} from "react";
+import {ReactNode, useCallback, useEffect, useState} from "react";
 import AdminContext from "./AdminContext.tsx";
 import {useDisclosure} from "@nextui-org/react";
 import {getAllClients} from "../../services/client.service.ts";
 import {OpClient} from "../../interfaces/Client.ts";
 import {getAllAccounts} from "../../services/account.service.ts";
 import {OpAccount} from "../../interfaces/Account.ts";
+import {CI, MALE} from "../../constants/project.constants.ts";
 
 interface Props {
   children: ReactNode;
 }
 
 function AdminProvider({children}: Props) {
+
   const [clientID, setClientID] = useState<number>(0);
+  const [clientData, setClientData] = useState<OpClient>({
+      name: "",
+      first_last_name: "",
+      second_last_name: "",
+      doc_type: CI,
+      doc_number: "",
+      birth_date: "",
+      gender: MALE,
+    }
+  )
   const [clientsList, setClientsList] = useState<OpClient[]>([] as OpClient[]);
+
   const [accountsList, setAccountsList] = useState<OpAccount[]>([] as OpAccount[]);
+
+
   // authentification
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [deleteOP, setDeleteOP] = useState({idRow: 0, type: ""});
+  const [rowTypeOP, setRowTypeOP] = useState<{idRow: number, type?: string, createEdit?: string}>({idRow: 0, type: "", createEdit: ""});
 
   //modal client
   const {isOpen: isOpenClient, onOpen: onOpenClient, onClose: onCloseClient} = useDisclosure();
@@ -79,6 +94,14 @@ function AdminProvider({children}: Props) {
     }
   }, []);
 
+  useEffect(() => {
+    getAccountsData();
+  }, [getAccountsData]);
+
+  useEffect(() => {
+    getClientsData();
+  }, [getClientsData]);
+
   return (
       <AdminContext.Provider
           value={{
@@ -88,6 +111,8 @@ function AdminProvider({children}: Props) {
             setIsAuthenticated,
             clientID,
             setClientID,
+            clientData,
+            setClientData,
             clientsList,
             setClientsList,
             accountsList,
@@ -104,8 +129,8 @@ function AdminProvider({children}: Props) {
             isOpenClientAccounts,
             onCloseClientAccounts,
             onOpenClientAccounts,
-            deleteOP,
-            setDeleteOP,
+            rowTypeOP,
+            setRowTypeOP,
             getClientsData,
             getAccountsData,
           }}

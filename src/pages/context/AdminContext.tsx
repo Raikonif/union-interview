@@ -9,6 +9,8 @@ interface AdminContextData {
   setIsAuthenticated: (value: boolean) => void;
   clientID: number;
   setClientID: (id: number) => void;
+  clientData: OpClient;
+  setClientData: (client: OpClient) => void;
   clientsList: OpClient[];
   setClientsList: (clients: OpClient[]) => void;
   accountsList: OpAccount[];
@@ -25,8 +27,8 @@ interface AdminContextData {
   isOpenClientAccounts: boolean;
   onOpenClientAccounts: () => void;
   onCloseClientAccounts: () => void;
-  deleteOP: { idRow: number; type: string };
-  setDeleteOP: (data: { idRow: number; type: string }) => void;
+  rowTypeOP: { idRow: number; type?: string; createEdit?: string };
+  setRowTypeOP: (data: { idRow: number; type?: string, createEdit?: string }) => void;
   getAccountsData: () => Promise<void>;
   getClientsData: () => Promise<void>;
 }

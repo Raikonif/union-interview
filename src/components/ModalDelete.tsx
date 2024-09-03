@@ -8,15 +8,15 @@ import {toast} from "react-hot-toast";
 
 function ModalDelete() {
   const {isOpenDelete, onOpenDelete, onCloseDelete, getClientsData, getAccountsData} = useContext(AdminContext);
-  const {deleteOP} = useContext(AdminContext);
+  const {rowTypeOP} = useContext(AdminContext);
 
   const handleDeleteOption = async () => {
-    if (deleteOP.type === CLIENTS) {
-      await deleteClient(deleteOP.idRow)
+    if (rowTypeOP.type === CLIENTS) {
+      await deleteClient(rowTypeOP.idRow)
       await getClientsData();
     }
-    if (deleteOP.type === ACCOUNTS) {
-      await deleteAccount(deleteOP.idRow);
+    if (rowTypeOP.type === ACCOUNTS) {
+      await deleteAccount(rowTypeOP.idRow);
       await getAccountsData();
     }
     toast.success("Registro eliminado correctamente");

@@ -1,16 +1,12 @@
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button} from "@nextui-org/react";
 import {FaPlus, FaTrash, FaUserEdit} from "react-icons/fa";
 import AdminContext from "../context/AdminContext.tsx";
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import {OpAccount} from "../../interfaces/Account.ts";
 import {ACCOUNTS} from "../../constants/project.constants.ts";
 
 function AccountsTable() {
-  const {onOpenAccount, onOpenDelete, setDeleteOP, getAccountsData, accountsList} = useContext(AdminContext);
-
-  useEffect(() => {
-    getAccountsData();
-  }, [getAccountsData]);
+  const {onOpenAccount, onOpenDelete, setRowTypeOP, accountsList} = useContext(AdminContext);
 
 
   return (
@@ -35,7 +31,7 @@ function AccountsTable() {
                     <FaUserEdit size={16} />
                   </Button>
                   <Button variant="bordered" onClick={()=> {
-                    setDeleteOP({idRow: account.id || 0, type: ACCOUNTS});
+                    setRowTypeOP({idRow: account.id || 0, type: ACCOUNTS});
                     onOpenDelete();
                   }} size="sm" color="danger">
                     <FaTrash size={16} />

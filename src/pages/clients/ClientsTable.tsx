@@ -8,11 +8,11 @@ import {
   Button, DropdownItem, Dropdown, DropdownTrigger, DropdownMenu,
 } from "@nextui-org/react";
 import {FaPlus, FaTrash, FaUserEdit} from "react-icons/fa";
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import AdminContext from "../context/AdminContext.tsx";
 import {MdAccountBalanceWallet} from "react-icons/md";
 import {OpClient} from "../../interfaces/Client.ts";
-import {CLIENTS} from "../../constants/project.constants.ts";
+import {CLIENTS, EDIT} from "../../constants/project.constants.ts";
 
 function ClientsTable() {
   const {
@@ -21,14 +21,11 @@ function ClientsTable() {
     onOpenAccount,
     onOpenClientAccounts,
     clientsList,
-    getClientsData,
-    setDeleteOP,
+    setRowTypeOP,
     setClientID,
+    setClientData,
   } = useContext(AdminContext);
 
-  useEffect(() => {
-    getClientsData();
-  }, [getClientsData]);
 
   return (
     <div className="flex w-full mt-10">
@@ -59,7 +56,11 @@ function ClientsTable() {
                 <div className="flex gap-5 items-center">
                   <Button
                     variant="bordered"
-                    onClick={onOpenClient}
+                    onPress={()=> {
+                      setRowTypeOP({idRow: client.id || 0, createEdit: EDIT});
+                      setClientData(client);
+                      onOpenClient();
+                    }}
                     size={"sm"}
                     color={"warning"}
                   >
@@ -68,7 +69,7 @@ function ClientsTable() {
                   <Button
                     variant="bordered"
                     onClick={() => {
-                      setDeleteOP({idRow: client!.id || 0, type: CLIENTS});
+                      setRowTypeOP({idRow: client!.id || 0, type: CLIENTS});
                       onOpenDelete();
                     }}
                     size={"sm"}

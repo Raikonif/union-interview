@@ -27,6 +27,10 @@ export const SAVINGS = "savings"
 
 export const CHECKING = "checking"
 
+export const EDIT = "edit"
+
+export const CREATE = "create"
+
 
 export const Icons: Record<string, IconType> = {
   ...FaIcons,
