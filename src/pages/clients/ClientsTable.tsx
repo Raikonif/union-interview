@@ -8,11 +8,11 @@ import {
   Button, DropdownItem, Dropdown, DropdownTrigger, DropdownMenu,
 } from "@nextui-org/react";
 import {FaPlus, FaTrash, FaUserEdit} from "react-icons/fa";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import AdminContext from "../context/AdminContext.tsx";
 import {MdAccountBalanceWallet} from "react-icons/md";
 import {OpClient} from "../../interfaces/Client.ts";
-import {CLIENTS, EDIT} from "../../constants/project.constants.ts";
+import {BOLIVIANOS, CLIENTS, CREATE, EDIT, SAVINGS} from "../../constants/project.constants.ts";
 
 function ClientsTable() {
   const {
@@ -23,9 +23,15 @@ function ClientsTable() {
     clientsList,
     setRowTypeOP,
     setClientID,
+    setAccountData,
+    clientData,
     setClientData,
+    setOwner,
   } = useContext(AdminContext);
 
+  useEffect(() => {
+    console.log("clientData", clientData)
+  }, [clientData]);
 
   return (
     <div className="flex w-full mt-10">
@@ -34,7 +40,18 @@ function ClientsTable() {
         className="flex w-full h-full pt-4 mx-4"
         topContent={
           <div className="justify-end w-full flex">
-            <Button color="primary" onPress={onOpenClient}>
+            <Button color="primary" onPress={() => {
+              setRowTypeOP({idRow: 0, createEdit: CREATE});
+              setClientData({
+                name: "",
+                first_last_name: "",
+                second_last_name: "",
+                doc_type: "",
+                doc_number: "",
+                birth_date: "",
+              })
+              onOpenClient();
+            }}>
               Crear Cliente <FaPlus/>
             </Button>
           </div>
@@ -56,7 +73,7 @@ function ClientsTable() {
                 <div className="flex gap-5 items-center">
                   <Button
                     variant="bordered"
-                    onPress={()=> {
+                    onPress={() => {
                       setRowTypeOP({idRow: client.id || 0, createEdit: EDIT});
                       setClientData(client);
                       onOpenClient();
@@ -86,13 +103,33 @@ function ClientsTable() {
                       </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions">
-                      <DropdownItem key="new" onPress={()=> {
+                      <DropdownItem
+                        key="new"
+                        onPress={() => {
+                          setRowTypeOP({idRow: client!.id || 0, type: CLIENTS, createEdit: CREATE});
+                          setClientID(client.id || 0);
+                          setAccountData({
+                            client_id: client!.id,
+                            account_type: SAVINGS,
+                            account_number: 0,
+                            currency: BOLIVIANOS,
+                            amount: "",
+                            branch: "",
+                            created_at: "",
+                          });
+                          setOwner(client)
+                          onOpenAccount();
+                        }}
+                        className="text-success">
+                        Nueva Cuenta Bancaria
+                      </DropdownItem>
+                      <DropdownItem key="copy" className="text-warning" onPress={()=> {
                         setClientID(client.id || 0);
-                        onOpenAccount();
-                      }} className="text-success">Nueva Cuenta
-                        Bancaria</DropdownItem>
-                      <DropdownItem key="copy" className="text-warning" onPress={onOpenClientAccounts}>Ver y Editar
-                        Cuentas Bancarias</DropdownItem>
+                        setOwner(client)
+                        onOpenClientAccounts();
+                      }}>
+                        Ver y Editar Cuentas Bancarias
+                      </DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
                 </div>

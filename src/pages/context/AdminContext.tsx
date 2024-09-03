@@ -9,8 +9,16 @@ interface AdminContextData {
   setIsAuthenticated: (value: boolean) => void;
   clientID: number;
   setClientID: (id: number) => void;
+  owner: OpClient;
+  setOwner: (client: OpClient) => void;
   clientData: OpClient;
   setClientData: (client: OpClient) => void;
+  accountData: OpAccount;
+  setAccountData: (account: OpAccount) => void;
+  clientOwnerAccounts: OpAccount[];
+  setClientOwnerAccounts: (accounts: OpAccount[]) => void
+  clientsAccountsList: any[];
+  setClientsAccountsList: (clientsAccounts: any[]) => void;
   clientsList: OpClient[];
   setClientsList: (clients: OpClient[]) => void;
   accountsList: OpAccount[];

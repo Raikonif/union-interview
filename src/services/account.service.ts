@@ -14,8 +14,8 @@ const createAccount = async (account: OpAccount) => {
   return await axios.post(VITE_BACKEND_URL + "/api/v1" + "/accounts", account);
 }
 
-const updateAccount = async (id: string, account: any) => {
-  return await axios.put(VITE_BACKEND_URL + "/api/v1" + "/accounts/" + id, account);
+const updateAccount = async (account: OpAccount) => {
+  return await axios.put(VITE_BACKEND_URL + "/api/v1" + "/accounts/" + account.id, account);
 }
 
 const deleteAccount = async (id: number) => {

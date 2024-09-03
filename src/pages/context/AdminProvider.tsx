@@ -5,7 +5,7 @@ import {getAllClients} from "../../services/client.service.ts";
 import {OpClient} from "../../interfaces/Client.ts";
 import {getAllAccounts} from "../../services/account.service.ts";
 import {OpAccount} from "../../interfaces/Account.ts";
-import {CI, MALE} from "../../constants/project.constants.ts";
+import {BOLIVIANOS, CI, MALE, SAVINGS} from "../../constants/project.constants.ts";
 
 interface Props {
   children: ReactNode;
@@ -14,6 +14,15 @@ interface Props {
 function AdminProvider({children}: Props) {
 
   const [clientID, setClientID] = useState<number>(0);
+  const [owner, setOwner] = useState<OpClient>({
+    name: "",
+    first_last_name: "",
+    second_last_name: "",
+    doc_type: CI,
+    doc_number: "",
+    birth_date: "",
+  } as OpClient);
+
   const [clientData, setClientData] = useState<OpClient>({
       name: "",
       first_last_name: "",
@@ -23,7 +32,22 @@ function AdminProvider({children}: Props) {
       birth_date: "",
       gender: MALE,
     }
-  )
+  );
+
+  const [accountData, setAccountData] = useState<OpAccount>({
+    client_id: clientID,
+    account_type: SAVINGS,
+    account_number: 0,
+    currency: BOLIVIANOS,
+    amount: "",
+    branch: "",
+    created_at: "",
+  });
+
+  const [clientOwnerAccounts, setClientOwnerAccounts] = useState<any[]>([] as any[]);
+
+  const [clientsAccountsList, setClientsAccountsList] = useState<any[]>([] as any[]);
+
   const [clientsList, setClientsList] = useState<OpClient[]>([] as OpClient[]);
 
   const [accountsList, setAccountsList] = useState<OpAccount[]>([] as OpAccount[]);
@@ -94,6 +118,19 @@ function AdminProvider({children}: Props) {
     }
   }, []);
 
+  const mergeClientsAccounts = () => {
+    const clientsAccounts = accountsList.map((account) => {
+      const client = clientsList.find((client) => client.id === account.client_id);
+      return {...account, client: client};
+    });
+    setClientsAccountsList(clientsAccounts);
+  }
+
+  const clientOwnerAccountsList = ()=> {
+    const clientAccounts = accountsList.filter((account) => account.client_id === clientID);
+    setClientOwnerAccounts(clientAccounts);
+  }
+
   useEffect(() => {
     getAccountsData();
   }, [getAccountsData]);
@@ -101,6 +138,14 @@ function AdminProvider({children}: Props) {
   useEffect(() => {
     getClientsData();
   }, [getClientsData]);
+
+  useEffect(() => {
+    mergeClientsAccounts()
+  }, [accountsList, clientsList]);
+
+  useEffect(() => {
+    clientOwnerAccountsList();
+  }, [clientID]);
 
   return (
       <AdminContext.Provider
@@ -111,8 +156,16 @@ function AdminProvider({children}: Props) {
             setIsAuthenticated,
             clientID,
             setClientID,
+            owner,
+            setOwner,
             clientData,
             setClientData,
+            accountData,
+            setAccountData,
+            clientOwnerAccounts,
+            setClientOwnerAccounts,
+            clientsAccountsList,
+            setClientsAccountsList,
             clientsList,
             setClientsList,
             accountsList,
