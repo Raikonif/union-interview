@@ -15,17 +15,17 @@ function Login() {
     e.preventDefault();
     setError("");
 
-    if (!email || !password) {
-      setError("Please fill in all fields.");
-      toast.error("Please fill in all fields.");
-      console.log("error", error)
-      return;
-    }
-    if (email !== "" && password !== "") {
+    // if (!email || !password) {
+    //   setError("Please fill in all fields.");
+    //   toast.error("Please fill in all fields.");
+    //   console.log("error", error)
+    //   return;
+    // }
+    // if (email !== "" && password !== "") {
       toast.success("Login success");
       setIsAuthenticated(true);
       navigate(CLIENTS);
-    }
+    // }
     // Here you would typically handle the login logic
     console.log("Login attempted with:", { email, password });
   };
@@ -34,7 +34,10 @@ function Login() {
     <div className="flex justify-center min-h-screen items-center w-full">
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded p-5">
         <h2 className="text-2xl mb-6 text-center font-bold text-gray-800">
-          Authenticate to access the dashboard
+          Bienvenido a la aplicación de administración de clientes y cuentas
+        </h2>
+        <h2 className="text-2xl mb-6 text-center font-bold text-gray-800">
+          Ingresa solo presionando el botón "Ingresar"
         </h2>
         <div className="mb-4">
           <label
@@ -50,7 +53,6 @@ function Login() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
           />
         </div>
         <div className="mb-6">
@@ -67,7 +69,6 @@ function Login() {
             placeholder="******************"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
         </div>
         <div className="flex items-center justify-between">
@@ -75,7 +76,7 @@ function Login() {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
-            Sign In
+            Ingresar
           </button>
         </div>
       </form>
