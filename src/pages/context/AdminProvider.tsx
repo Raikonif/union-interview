@@ -127,7 +127,7 @@ function AdminProvider({children}: Props) {
   }
 
   const clientOwnerAccountsList = ()=> {
-    const clientAccounts = accountsList.filter((account) => account.client_id === clientID);
+    const clientAccounts = accountsList.filter((account) => account.client_id === owner.id);
     setClientOwnerAccounts(clientAccounts);
   }
 
@@ -145,7 +145,7 @@ function AdminProvider({children}: Props) {
 
   useEffect(() => {
     clientOwnerAccountsList();
-  }, [clientID]);
+  }, [accountsList, clientsList, owner]);
 
   return (
       <AdminContext.Provider

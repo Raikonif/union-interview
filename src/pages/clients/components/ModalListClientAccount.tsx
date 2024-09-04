@@ -19,9 +19,14 @@ function ModalListClientAccount() {
     owner,
   } = useContext(AdminContext);
   return (
-    <BaseModal action={async () => {
-    }} isOpen={isOpenClientAccounts} onOpenChange={onOpenClientAccounts} onClose={onCloseClientAccounts}
-               title={"Cuentas Bancarias"} customSize={"full"}>
+    <BaseModal
+      action={async () => {
+      }}
+      isOpen={isOpenClientAccounts}
+      onOpenChange={onOpenClientAccounts}
+      onClose={onCloseClientAccounts}
+      title={"Cuentas Bancarias"}
+      customSize={"full"}>
       <div className="flex w-full mt-10">
         <Table aria-label="Example static collection table" className="flex w-full h-full pt-4 mx-4"
                topContent={<div className="justify-end w-full flex"><Button color="primary" onPress={() => {
@@ -47,7 +52,7 @@ function ModalListClientAccount() {
             <TableColumn>Acciones</TableColumn>
           </TableHeader>
           <TableBody emptyContent={"No Rows to display"}>
-            {clientOwnerAccounts && clientOwnerAccounts.length ? clientOwnerAccounts.map((account: any) => (
+            {clientOwnerAccounts && clientOwnerAccounts.length > 0 ? clientOwnerAccounts.map((account: any) => (
               <TableRow key={account.id}>
                 <TableCell>{account.account_number}</TableCell>
                 <TableCell>{account.account_type === CHECKING ? "Cuenta Corrienta" : "Caja de Ahorros"}</TableCell>

@@ -27,11 +27,16 @@ function ClientsTable() {
     clientData,
     setClientData,
     setOwner,
+    owner,
   } = useContext(AdminContext);
 
   useEffect(() => {
     console.log("clientData", clientData)
   }, [clientData]);
+
+  useEffect(() => {
+    console.log("owner", owner)
+  }, [owner]);
 
   return (
     <div className="flex w-full mt-10">
@@ -98,6 +103,9 @@ function ClientsTable() {
                     <DropdownTrigger>
                       <Button
                         variant="bordered"
+                        onClick={() =>
+                          setOwner(client)
+                        }
                       >
                         Cuentas Bancarias <MdAccountBalanceWallet size={16}/>
                       </Button>
@@ -107,6 +115,7 @@ function ClientsTable() {
                         key="new"
                         onPress={() => {
                           setRowTypeOP({idRow: client!.id || 0, type: CLIENTS, createEdit: CREATE});
+                          setOwner(client)
                           setClientID(client.id || 0);
                           setAccountData({
                             client_id: client!.id,
@@ -117,13 +126,12 @@ function ClientsTable() {
                             branch: "",
                             created_at: "",
                           });
-                          setOwner(client)
                           onOpenAccount();
                         }}
                         className="text-success">
                         Nueva Cuenta Bancaria
                       </DropdownItem>
-                      <DropdownItem key="copy" className="text-warning" onPress={()=> {
+                      <DropdownItem key="copy" className="text-warning" onPress={() => {
                         setClientID(client.id || 0);
                         setOwner(client)
                         onOpenClientAccounts();
